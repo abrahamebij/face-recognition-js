@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Face Recognition App</title>
+    <script src="face-api.min.js" defer></script>
+    <script src="./script.js" defer></script>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        row-gap: 2.5rem;
+        flex-direction: column-reverse;
+        margin: 30px 0;
+        padding: 0;
+      }
+      canvas {
+        position: absolute;
+        top: 0;
+        /* left: 0; */
+      }
+      #container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        /* width: 70%; */
+      }
+      #container img,
+      #container canvas {
+        width: 60%;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="imageUpload" />
+    <div id="container"></div>
+  </body>
+</html>
