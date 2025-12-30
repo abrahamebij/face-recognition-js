@@ -8,8 +8,9 @@ Promise.all([
 ]).then(start);
 
 async function start() {
+  document.body.classList.add("loading");
   const labeledFaceDescriptors = await loadLabeledImages();
-  document.body.append("Loaded");
+  document.body.classList.remove("loading");
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
 
   imageUpload.addEventListener("change", async () => {
@@ -60,23 +61,25 @@ async function loadLabeledImages() {
     "Captain Marvel",
     "Hawkeye",
     "Jim Rhodes",
-    // "Nebula",
     "Thor",
     "Tony Stark",
+    // "Nebula",
   ];
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
       for (let i = 1; i < 2; i++) {
         const img = await faceapi.fetchImage(
-          `https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/${label}/${i}.jpg`
+          `https://raw.githubusercontent.com/abrahamebij/face-recognition-js/master/labeled_images/${label}/${i}.jpg`
         );
         const detections = await faceapi
           .detectSingleFace(img)
           .withFaceLandmarks()
           .withFaceDescriptor();
-
-        descriptions.push(detections.descriptor);
+        if (detections?.descriptor) {
+          descriptions.push(detections.descriptor);
+          // console.log("descriptions: ", descriptions);
+        }
       }
       //   console.log(descriptions);
       // console.log(faceapi.LabeledFaceDescriptors(label, descriptions));
